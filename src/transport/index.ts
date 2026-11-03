@@ -9,6 +9,14 @@ declare global {
     }
 }
 
+/** Another program (usually an ADB server) has claimed the USB interface. */
+export class DeviceBusyError extends Error {
+    constructor() {
+        super("USB sedang dipakai program lain (Android Studio / adb).");
+        this.name = "DeviceBusyError";
+    }
+}
+
 export type TransportMode = "server" | "webusb" | "none";
 
 export interface DeviceEntry {
@@ -76,9 +84,7 @@ function createWebUsbSource(manager: AdbDaemonWebUsbDeviceManager): DeviceSource
                 connection = await device.connect();
             } catch (e) {
                 if (e instanceof AdbDaemonWebUsbDevice.DeviceBusyError || /claim|access denied|in use/i.test((e as Error).message)) {
-                    throw new Error(
-                        "USB sedang dipakai program lain (Android Studio / adb). Tutup Android Studio atau jalankan `adb kill-server`, atau pakai mode server (`npm start`).",
-                    );
+                    throw new DeviceBusyError();
                 }
                 throw e;
             }

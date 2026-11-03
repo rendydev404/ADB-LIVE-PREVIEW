@@ -1,6 +1,7 @@
 import { createSignal, For, lazy, Match, Show, Suspense, Switch } from "solid-js";
 import {
     adb,
+    busy,
     connecting,
     devices,
     error,
@@ -12,6 +13,7 @@ import {
     setSelectedId,
 } from "./device/store";
 import Mirror from "./features/mirror/Mirror";
+import { BusyCard } from "./ui/BusyCard";
 import { Guide } from "./ui/Guide";
 import { Icon } from "./ui/Icon";
 
@@ -148,6 +150,9 @@ export default function App() {
                         </dd>
                     </dl>
                 </Show>
+                <Show when={busy()}>
+                    <div class="hint warn">USB sedang dipakai program lain. Lihat langkahnya di tengah layar.</div>
+                </Show>
                 <Show when={error()}>
                     <div class="hint error">
                         {error()}
@@ -182,6 +187,7 @@ export default function App() {
                 <Show
                     when={adb()}
                     fallback={
+                        <Show when={!busy()} fallback={<BusyCard />}>
                         <Show when={connecting()} fallback={<Guide />}>
                             <div class="connect-wait">
                                 <div class="spinner big" />
@@ -191,6 +197,7 @@ export default function App() {
                                     lain kali tersambung otomatis.
                                 </p>
                             </div>
+                        </Show>
                         </Show>
                     }
                 >

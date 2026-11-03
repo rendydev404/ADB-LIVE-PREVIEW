@@ -1040,3 +1040,139 @@ table.keys {
     right: 10px;
     z-index: 1;
 }
+
+/* Busy USB card */
+.busy {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    background: var(--stage);
+}
+
+.busy-card {
+    width: min(760px, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 28px clamp(16px, 4vw, 36px);
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid color-mix(in srgb, var(--warn) 45%, var(--border));
+    text-align: center;
+}
+
+.busy-icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--warn) 18%, transparent);
+    color: var(--warn);
+}
+
+.busy-card h2 {
+    margin: 0;
+    font-size: 20px;
+    text-wrap: balance;
+}
+
+.busy-lead {
+    margin: 0;
+    max-width: 560px;
+    color: var(--muted);
+}
+
+.busy-options {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    text-align: left;
+}
+
+.busy-options section {
+    padding: 16px;
+    border-radius: var(--radius);
+    background: var(--surface-2);
+}
+
+.busy-options h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    font-size: 14px;
+}
+
+.busy-options p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.busy-options ol {
+    margin: 0 0 10px;
+    padding-left: 18px;
+}
+
+.busy-options li + li {
+    margin-top: 8px;
+}
+
+.busy-options code {
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface);
+}
+
+.tag-ok,
+.tag-info {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.tag-ok {
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    color: var(--accent);
+}
+
+.tag-info {
+    background: color-mix(in srgb, var(--log-d) 20%, transparent);
+    color: var(--log-d);
+}
+
+.cmd {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    padding: 6px 6px 6px 12px;
+    border-radius: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+}
+
+.cmd code {
+    flex: 1;
+    background: none !important;
+    font-size: 13px;
+}
+
+.cmd button {
+    min-height: 26px;
+    border-color: var(--border);
+}
+
+.small {
+    font-size: 12px;
+}
+
+.hint.warn {
+    color: var(--warn);
+}

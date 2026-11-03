@@ -1,6 +1,6 @@
 import type { Adb } from "@yume-chan/adb";
 import { createEffect, createRoot, createSignal, on } from "solid-js";
-import { detectSource, type DeviceEntry, type DeviceSource, type TransportMode } from "../transport";
+import { DeviceBusyError, detectSource, type DeviceEntry, type DeviceSource, type TransportMode } from "../transport";
 
 export interface DeviceInfo {
     model: string;
@@ -17,8 +17,9 @@ const [adb, setAdb] = createSignal<Adb>();
 const [info, setInfo] = createSignal<DeviceInfo>();
 const [connecting, setConnecting] = createSignal(false);
 const [error, setError] = createSignal<string>();
+const [busy, setBusy] = createSignal(false);
 
-export { mode, source, devices, selectedId, setSelectedId, adb, info, connecting, error, setError };
+export { mode, source, devices, selectedId, setSelectedId, adb, info, connecting, error, setError, busy };
 
 // One live connection per device, shared by every panel.
 const connections = new Map<string, Promise<Adb>>();
@@ -113,6 +114,7 @@ createRoot(() => {
                 setAdb(undefined);
                 setInfo(undefined);
                 setError(undefined);
+                setBusy(false);
                 const entry = devices().find((d) => d.id === selectedId());
                 if (!key || !entry || entry.state !== "device") return;
                 setConnecting(true);
@@ -122,7 +124,9 @@ createRoot(() => {
                     setAdb(value);
                     setInfo(await readInfo(value));
                 } catch (e) {
-                    if (selectedId() === entry.id) setError((e as Error).message);
+                    if (selectedId() !== entry.id) return;
+                    if (e instanceof DeviceBusyError) setBusy(true);
+                    else setError((e as Error).message);
                 } finally {
                     setConnecting(false);
                 }
