@@ -1176,3 +1176,16 @@ table.keys {
 .hint.warn {
     color: var(--warn);
 }
+
+.block-line {
+    display: block;
+    margin-top: 6px;
+}
+
+kbd {
+    padding: 0 5px;
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    font: 11px var(--mono);
+}

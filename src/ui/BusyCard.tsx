@@ -2,7 +2,8 @@ import { createSignal } from "solid-js";
 import { reconnect } from "../device/store";
 import { Icon } from "./Icon";
 
-const KILL_COMMAND = "adb kill-server";
+// Full path, because Android Studio does not add platform-tools to PATH.
+const KILL_COMMAND = String.raw`& "$env:LOCALAPPDATAAndroidSdkplatform-toolsdb.exe" kill-server`;
 
 export function BusyCard() {
     const [copied, setCopied] = createSignal(false);
@@ -37,7 +38,9 @@ export function BusyCard() {
                         <ol>
                             <li>Tutup Android Studio, scrcpy, Vysor, atau PC Suite.</li>
                             <li>
-                                Buka Command Prompt / Terminal, lalu jalankan:
+                                Hentikan proses <b>adb.exe</b>. Cara termudah: buka <b>Task Manager</b> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd>) →
+                                tab <b>Details</b> → pilih <code>adb.exe</code> → <b>End task</b>.
+                                <span class="muted small block-line">Atau jalankan ini di PowerShell:</span>
                                 <div class="cmd">
                                     <code>{KILL_COMMAND}</code>
                                     <button title="Salin perintah" onClick={copy}>

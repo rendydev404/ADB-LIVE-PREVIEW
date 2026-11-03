@@ -47,8 +47,8 @@ const REQUIREMENTS: Requirement[] = [
         title: "Tidak ada program lain yang memakai ADB",
         body: (
             <>
-                Android Studio, scrcpy, atau PC Suite bawaan HP harus ditutup. Di PC developer, jalankan <code>adb kill-server</code> dulu. Di PC biasa,
-                syarat ini otomatis terpenuhi.
+                Android Studio, scrcpy, atau PC Suite bawaan HP harus ditutup. Di PC developer, hentikan juga proses <code>adb.exe</code> lewat Task
+                Manager. Di PC biasa, syarat ini otomatis terpenuhi.
             </>
         ),
     },
@@ -113,7 +113,8 @@ const TROUBLESHOOTING: Faq[] = [
         a: (
             <>
                 Ada program lain yang sedang memegang koneksi ADB. Tutup Android Studio, scrcpy, Vysor, atau PC Suite (vivo, Xiaomi, Samsung Smart Switch),
-                lalu jalankan <code>adb kill-server</code> kalau ada. Setelah itu cabut-colok HP dan klik <b>Hubungkan ulang</b>.
+                lalu hentikan proses <code>adb.exe</code> lewat <b>Task Manager → Details → End task</b>. Setelah itu cabut-colok HP dan klik{" "}
+                <b>Coba lagi</b>.
             </>
         ),
     },
