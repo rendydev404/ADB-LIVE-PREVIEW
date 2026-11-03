@@ -1,0 +1,16 @@
+# Replace adb.example.com with your domain and 8080 with HOST_PORT if you changed it.
+adb.example.com {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "usb=(self), camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+	@hashed path /assets/* /scrcpy-server-v*
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+	@html not path /assets/* /scrcpy-server-v*
+	header @html Cache-Control "no-cache"
+	reverse_proxy 127.0.0.1:8080
+}

@@ -1,0 +1,19 @@
+# Copy to the server (e.g. /opt/adb-live-preview). A reverse proxy such as Caddy terminates HTTPS in front of it.
+name: adb-live-preview
+
+services:
+  web:
+    image: ghcr.io/rendydev404/adb-live-preview:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${HOST_PORT:-8080}:8080"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    # Static files only: BusyBox httpd stays around 1 MB.
+    mem_limit: 32m
+    cpus: 0.25
+    pids_limit: 32
+    logging:
+      driver: json-file
+      options: { max-size: "1m", max-file: "2" }
