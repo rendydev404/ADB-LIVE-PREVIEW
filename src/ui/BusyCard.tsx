@@ -3,7 +3,7 @@ import { reconnect } from "../device/store";
 import { Icon } from "./Icon";
 
 // Full path, because Android Studio does not add platform-tools to PATH.
-const KILL_COMMAND = String.raw`& "$env:LOCALAPPDATAAndroidSdkplatform-toolsdb.exe" kill-server`;
+const KILL_COMMAND = String.raw`& "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe" kill-server`;
 
 export function BusyCard() {
     const [copied, setCopied] = createSignal(false);
